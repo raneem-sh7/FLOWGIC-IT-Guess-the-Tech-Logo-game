@@ -5,7 +5,6 @@ import { GamePage } from './pages/GamePage'
 import { ResultsPage } from './pages/ResultsPage'
 import { WelcomePage } from './pages/WelcomePage'
 import { useFullscreen } from './hooks/useFullscreen'
-import { useWelcomeSpeech } from './hooks/useWelcomeSpeech'
 import type { DifficultyId } from './types/difficulty'
 import type { GameQuestion, GameResult } from './types/game'
 import { createGameQuestions } from './utils/createGameQuestions'
@@ -21,12 +20,6 @@ function App() {
   const [isSoundMuted, setIsSoundMuted] = useState(false)
   const { error: fullscreenError, isFullscreen, isSupported, toggleFullscreen } =
     useFullscreen()
-  const {
-    isMuted: isWelcomeVoiceMuted,
-    isSupported: isWelcomeVoiceSupported,
-    speakWelcome,
-    toggleMuted: toggleWelcomeVoiceMuted,
-  } = useWelcomeSpeech()
 
   function goHome() {
     setSelectedDifficulty(null)
@@ -50,15 +43,7 @@ function App() {
   return (
     <div className="app-shell">
       {currentPage === 'welcome' && (
-        <WelcomePage
-          isVoiceMuted={isWelcomeVoiceMuted}
-          isVoiceSupported={isWelcomeVoiceSupported}
-          onStart={() => {
-            speakWelcome()
-            setCurrentPage('difficulty')
-          }}
-          onToggleVoice={toggleWelcomeVoiceMuted}
-        />
+        <WelcomePage onStart={() => setCurrentPage('difficulty')} />
       )}
       {currentPage === 'difficulty' && (
         <DifficultyPage

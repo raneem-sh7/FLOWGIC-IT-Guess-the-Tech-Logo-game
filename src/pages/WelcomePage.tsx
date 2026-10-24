@@ -1,18 +1,10 @@
-import { ArrowRight, Volume2, VolumeX } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 type WelcomePageProps = {
-  isVoiceMuted: boolean
-  isVoiceSupported: boolean
   onStart: () => void
-  onToggleVoice: () => void
 }
 
-export function WelcomePage({
-  isVoiceMuted,
-  isVoiceSupported,
-  onStart,
-  onToggleVoice,
-}: WelcomePageProps) {
+export function WelcomePage({ onStart }: WelcomePageProps) {
   return (
     <main className="welcome-page">
       <div className="ambient ambient-blue" aria-hidden="true" />
@@ -33,40 +25,6 @@ export function WelcomePage({
             <span>STUDENT TEAM</span>
           </span>
         </a>
-        <button
-          className="sound-toggle welcome-voice-toggle"
-          type="button"
-          onClick={onToggleVoice}
-          disabled={!isVoiceSupported}
-          aria-label={
-            !isVoiceSupported
-              ? 'Welcome voice is not supported by this browser'
-              : isVoiceMuted
-                ? 'Unmute welcome voice'
-                : 'Mute welcome voice'
-          }
-          aria-pressed={isVoiceMuted}
-          title={
-            !isVoiceSupported
-              ? 'Welcome voice is not supported'
-              : isVoiceMuted
-                ? 'Turn welcome voice on'
-                : 'Turn welcome voice off'
-          }
-        >
-          {isVoiceMuted ? (
-            <VolumeX size={17} aria-hidden="true" />
-          ) : (
-            <Volume2 size={17} aria-hidden="true" />
-          )}
-          <span>
-            {!isVoiceSupported
-              ? 'Voice unavailable'
-              : isVoiceMuted
-                ? 'Voice off'
-                : 'Voice on'}
-          </span>
-        </button>
       </header>
 
       <section className="welcome-content" id="home">
