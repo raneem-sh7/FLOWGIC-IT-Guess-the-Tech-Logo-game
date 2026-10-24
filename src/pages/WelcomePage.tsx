@@ -1,10 +1,21 @@
 import { ArrowRight } from 'lucide-react'
+import { FullscreenToggle } from '../components/FullscreenToggle'
 
 type WelcomePageProps = {
+  fullscreenError: string
+  isFullscreen: boolean
+  isFullscreenSupported: boolean
   onStart: () => void
+  onToggleFullscreen: () => void
 }
 
-export function WelcomePage({ onStart }: WelcomePageProps) {
+export function WelcomePage({
+  fullscreenError,
+  isFullscreen,
+  isFullscreenSupported,
+  onStart,
+  onToggleFullscreen,
+}: WelcomePageProps) {
   return (
     <main className="welcome-page">
       <div className="ambient ambient-blue" aria-hidden="true" />
@@ -25,7 +36,20 @@ export function WelcomePage({ onStart }: WelcomePageProps) {
             <span>STUDENT TEAM</span>
           </span>
         </a>
+        <div className="header-controls">
+          <FullscreenToggle
+            isFullscreen={isFullscreen}
+            isSupported={isFullscreenSupported}
+            onToggle={onToggleFullscreen}
+          />
+        </div>
       </header>
+
+      {fullscreenError && (
+        <p className="fullscreen-error" role="status">
+          {fullscreenError}
+        </p>
+      )}
 
       <section className="welcome-content" id="home">
         <div className="eyebrow">

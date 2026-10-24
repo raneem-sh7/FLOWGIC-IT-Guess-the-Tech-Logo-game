@@ -1,5 +1,6 @@
 import { ArrowLeft, Layers3, Sparkles, Wrench } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { FullscreenToggle } from '../components/FullscreenToggle'
 import { TeamHeader } from '../components/TeamHeader'
 import { DIFFICULTY_LIST } from '../config/difficulties'
 import type { DifficultyId } from '../types/difficulty'
@@ -11,17 +12,25 @@ const difficultyIcons: Record<DifficultyId, LucideIcon> = {
 }
 
 type DifficultyPageProps = {
+  fullscreenError: string
+  isFullscreen: boolean
+  isFullscreenSupported: boolean
   selectedDifficulty: DifficultyId | null
   onBack: () => void
   onSelect: (difficulty: DifficultyId) => void
   onStart: () => void
+  onToggleFullscreen: () => void
 }
 
 export function DifficultyPage({
+  fullscreenError,
+  isFullscreen,
+  isFullscreenSupported,
   selectedDifficulty,
   onBack,
   onSelect,
   onStart,
+  onToggleFullscreen,
 }: DifficultyPageProps) {
   return (
     <main className="welcome-page difficulty-page">
@@ -29,7 +38,23 @@ export function DifficultyPage({
       <div className="ambient ambient-cyan" aria-hidden="true" />
       <div className="background-grid" aria-hidden="true" />
 
-      <TeamHeader />
+      <TeamHeader
+        actions={
+          <div className="header-controls">
+            <FullscreenToggle
+              isFullscreen={isFullscreen}
+              isSupported={isFullscreenSupported}
+              onToggle={onToggleFullscreen}
+            />
+          </div>
+        }
+      />
+
+      {fullscreenError && (
+        <p className="fullscreen-error" role="status">
+          {fullscreenError}
+        </p>
+      )}
 
       <section className="difficulty-content">
         <div className="eyebrow">

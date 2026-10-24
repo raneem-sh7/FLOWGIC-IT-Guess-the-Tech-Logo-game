@@ -43,14 +43,24 @@ function App() {
   return (
     <div className="app-shell">
       {currentPage === 'welcome' && (
-        <WelcomePage onStart={() => setCurrentPage('difficulty')} />
+        <WelcomePage
+          fullscreenError={fullscreenError}
+          isFullscreen={isFullscreen}
+          isFullscreenSupported={isSupported}
+          onStart={() => setCurrentPage('difficulty')}
+          onToggleFullscreen={toggleFullscreen}
+        />
       )}
       {currentPage === 'difficulty' && (
         <DifficultyPage
+          fullscreenError={fullscreenError}
+          isFullscreen={isFullscreen}
+          isFullscreenSupported={isSupported}
           selectedDifficulty={selectedDifficulty}
           onBack={goHome}
           onSelect={setSelectedDifficulty}
           onStart={startChallenge}
+          onToggleFullscreen={toggleFullscreen}
         />
       )}
       {currentPage === 'game' && selectedDifficulty && (
